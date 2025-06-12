@@ -30,7 +30,7 @@ guitar = FretboardExplorer()
 ### 2. Build the fretboard
 
 ```python
-guitar.liutaio(6,22,[40, 45, 50, 55, 59, 64]) # Building the neck of a 6-string guitar with 22 frets in standard tuning (in MIDI), as a topological space
+guitar.liutaio(6,22,[40, 45, 50, 55, 59, 64]) # Building the neck of a 6-string guitar with 22 frets in standard tuning (in MIDI)
 
 ```
 
@@ -39,8 +39,8 @@ guitar.liutaio(6,22,[40, 45, 50, 55, 59, 64]) # Building the neck of a 6-string 
 ### 3. Find positions for a note
 
 ```python
-guitar.all_positions("Do#",0,1) # find all the Do# possible in every position and octave
-guitar.all_positions("Do#3",1,1) # find all the position possible for Do#3
+guitar.all_positions("Do#",0,1) # find all Do# possible in every position and octave
+guitar.all_positions("Do#3",1,1) # find all possible positions for Do#3
 ```
 #### Example output:
 ```
@@ -110,8 +110,8 @@ guitar.chord_plotter(chord)
 
 ```
 #### Example image:
-![Visualization generatend with Lilypond by Abjad, the full version is available in /examples as .pdf file](examples/img_chord_visualization.png)
-
+![Visualization generated with Lilypond by Abjad](examples/img_chord_visualization.png)
+[Full PDF](examples/chord_visualization.pdf)
 
 ---
 
@@ -147,8 +147,8 @@ guitar.chord_plotter(chord_filtered)
 (('Corda: 4, Tasto: 6, Pitch: Do#3, Tipo: CT', 'Corda: 2, Tasto: 7, Pitch: Mi2, Tipo: CT', 'Corda: 5, Tasto: 9, Pitch: Sol#3, Tipo: CT', 'Corda: 3, Tasto: 8, Pitch: La#2, Tipo: CT'), 70)
 ```
 #### Example image:
-![Visualization generatend with Lilypond by Abjad, the full version is available in /examples as .pdf file](examples/img_filtred_chord_visualization.png)
-
+![Visualization generated with Lilypond by Abjad.](examples/filtered_chord_visualization.pdf)
+[Full PDF](examples/filtered_chord_visualization.pdf)
 ---
 
 ### 6. Visualize voicings as heatmap
@@ -161,7 +161,7 @@ guitar.plot_voicings_heatmap(6,22,chord,0,["Do#","Mi","Sol#","La#"])
 ```python
 guitar.plot_voicings_heatmap(6,22,chord_filtered,1,["Do#","Mi","Sol#","La#"])
 ```
-![Heatmap Example for all_voicings() output](examples/heatmap_filtred_chord.png)
+![Heatmap Example for voicings_filter() output](examples/heatmap_filtered_chord.png)
 
 
 ---

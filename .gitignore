@@ -11,4 +11,5 @@ ehthumbs.db
 Thumbs.db
 __pycache__/
 **/__pycache__/
+__pycache__/**
 2025_guitar_sets_generations.py
