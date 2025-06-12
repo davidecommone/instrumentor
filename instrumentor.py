@@ -27,8 +27,7 @@ def mtoname(midi_note,outputmode): #converte un valore MIDI in una stringa con i
 def nametom(nota):  # converte il nome di una nota + l'ottava in un valore MIDI
     note_base = {'Do': 0,'Do#': 1,'Re': 2,'Re#': 3,'Mi': 4,'Fa': 5,'Fa#': 6,'Sol': 7,'Sol#': 8,'La': 9,'La#': 10,'Si': 11}
 
-    # Separare il nome della nota dall'ottava
-    match = re.match(r"([A-Za-z#b]+)(-?\d+)", nota)
+    match = re.match(r"([A-Za-z#b]+)(-?\d+)", nota) # Separare il nome della nota dall'ottava
     if not match:
         raise ValueError(f"Formato nota non valido: {nota}")
 
@@ -57,12 +56,20 @@ def miditoabjad(midivalue): # converte i valori MIDI (0-127) in valori relativi 
 
 class FretboardExplorer: 
 
-
-    """ 
     """
- 
+    Class for exploring and visualizing note positions and chord voicings on any stringed instruments with a freatboard (different kinds guitars,ukulele,electric bass, exc...).
+    Uses Prolog for position logic and Abjad for music notation.
+    """
 
     def liutaio(self,n_strings, n_frets, tunings=[]): #costruisce il manico dello strumento dato un numero di tasti, corde e relative accordature
+
+        """
+        Builds the instrument's fretboard.
+        n_strings: number of strings.
+        n_frets: number of frets.
+        tunings: list of MIDI values for open strings.
+        """
+
         if n_strings != len(tunings):
             print("Error, size of tunings list doesn't match strings number")
             return
@@ -82,6 +89,14 @@ class FretboardExplorer:
     
         
     def all_positions(self,n_tofind,mode=0,printout=0): #restituisce tutte le posizioni sul manico di un pitch all_positions("Do4",1) o di una nota in tutte le ottave possibili allpositions("Do")
+
+        """
+        Finds all positions of a note or pitch on the fretboard.
+        n_tofind: note name (e.g. "Do4" or "Do").
+        mode: 1 for pitch+octave, 0 for pitch class.
+        printout: 1 to print, 0 to only return the list.
+        """
+
         positions = []
     
         if mode == 1:
@@ -107,6 +122,13 @@ class FretboardExplorer:
     
     
     def all_voicings(self,chordnotes=[]):  # trova tutte le posizioni di tutti i rovolti possobili sul manico della lista di note inserita su chordnotes
+
+        """
+        Finds all possible voicings for a list of notes.
+        chordnotes: list of notes names as pitch class (e.g. ["Do", "Mi", "Sol"]). 
+        Returns: (valid voicings, output buffer)
+        """
+
         if not chordnotes or len(chordnotes) < 2:
             print("all_voicings() ERROR: Chord notes list is not valid")
             return []
@@ -163,6 +185,13 @@ class FretboardExplorer:
     
     
     def voicings_filter(self, allvoicings, tasto_scelto): # filtra l'output in uscita da all_voicings cercando solo i rivolti che hanno il tasta_scelto come posizione di almeno una nota dell'accordo
+
+        """
+        Filters voicings that include a specific fret.
+        allvoicings: output from all_voicings().
+        tasto_scelto: fret number to include.
+        """
+        
         valid_voicings_out = allvoicings[0]  # Lista dei voicing validi con ID
         filtered_voicings = []
         seen_voicings = set() 
@@ -191,6 +220,13 @@ class FretboardExplorer:
     
     
     def chord_extractor(self, voicing_buffer):  # prende l'output di voicing_filter ed elimina le informazioni inutili, creando solo una lista di note+ottava e ID del voicing
+
+        """
+        Extracts only the notes and ID from filtered voicings.
+        voicing_buffer: output from voicings_filter().
+        Used internally by Fretboardexplorer.chordplotter().
+        """
+
         chord =[]
         
         for data in voicing_buffer:
@@ -209,7 +245,17 @@ class FretboardExplorer:
     
     
     def chord_plotter(self, voicing_buffer,subtitle): # stampa in notazione musicale i tutti i rivolti passati da voicing_buffer
-    
+
+        """
+        Visualizes voicings as music notation (Abjad).
+        voicing_buffer: output from voicings_filter().
+        subtitle: subtitle for the score.
+        """
+        if isinstance(voicing_buffer,tuple) is True: #se voicing buffer è passato da all_voicings() non va in errore
+            voicing_buffer = voicing_buffer[1]
+        else:
+            pass
+
         notes_coll = self.chord_extractor(voicing_buffer)
         container = abjad.Container()
         main_score = abjad.Score()
@@ -217,7 +263,7 @@ class FretboardExplorer:
         header = r""" #(set-global-staff-size 14)
         \header {
         composer = \markup {} 
-        title = \markup {NeckProbe - Chords Plotting}
+        title = \markup {}
         subtitle = \markup {"""+subtitle+"""}
         }
         """
@@ -271,6 +317,15 @@ class FretboardExplorer:
 
     def plot_voicings_heatmap(self, n_strings, n_frets, voicings, set_or_subset, chordnoteslist=[]):   # crea un grafico di tipo heatmap delle posizioni trovate sul manico dei rivolti
 
+        """
+        Visualizes a heatmap of voicing positions on the fretboard.
+        n_strings: number of strings.
+        n_frets: number of frets.
+        voicings: output from all_voicings().
+        set_or_subset: 0 if voicings is instance of all_voicings(), 1 if voicings is istance of voicing_filter() .
+        chordnoteslist: list of chord notes.
+        """
+
         heatmap = np.zeros((n_strings, n_frets + 1))
 
         if set_or_subset == 0:
@@ -279,7 +334,7 @@ class FretboardExplorer:
             pass
 
         for voicing_tuple in voicings:
-            if isinstance(voicing_tuple, tuple):
+            if isinstance(voicing_tuple, tuple) is True:
                 voicing = voicing_tuple[0]
             else:
                 voicing = voicing_tuple
@@ -334,7 +389,3 @@ class FretboardExplorer:
         plt.tight_layout()
         plt.show()
 
-
-# Prompt:
-# crea una documentazione in stile readMe di Github di questo modulo, soffermandoti sui dettagli sulla siintassi e la guida all'uso.
-# crea inoltre un breve testo di assistenza alla sintassi da inserire tra le """""" sotto la classe e tutte le sue funzioni, in modo l'editor di testo e il compilatore possano visualizzarlo durante l'attività di programmazione

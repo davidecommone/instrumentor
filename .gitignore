@@ -1,0 +1,14 @@
+
+# OS generated files #
+######################
+**/.DS_Store
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+__pycache__/
+**/__pycache__/
+2025_guitar_sets_generations.py
