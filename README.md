@@ -147,7 +147,7 @@ guitar.chord_plotter(chord_filtered)
 (('Corda: 4, Tasto: 6, Pitch: Do#3, Tipo: CT', 'Corda: 2, Tasto: 7, Pitch: Mi2, Tipo: CT', 'Corda: 5, Tasto: 9, Pitch: Sol#3, Tipo: CT', 'Corda: 3, Tasto: 8, Pitch: La#2, Tipo: CT'), 70)
 ```
 #### Example image:
-![Visualization generated with Lilypond by Abjad.](examples/filtered_chord_visualization.pdf)
+![Visualization generated with Lilypond by Abjad.](examples/img_filtered_chord_visualization.png)
 [Full PDF](examples/filtered_chord_visualization.pdf)
 ---
 
