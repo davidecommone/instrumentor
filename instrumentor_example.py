@@ -18,7 +18,6 @@ for voicing in chord[0]:
 
 guitar.chord_plotter(chord,"")
 
-
 ######
 
 chord_filtered = guitar.voicings_filter(chord,7)

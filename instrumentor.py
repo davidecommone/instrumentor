@@ -315,7 +315,7 @@ class FretboardExplorer:
     
 
 
-    def plot_voicings_heatmap(self, n_strings, n_frets, voicings, set_or_subset, chordnoteslist=[]):   # crea un grafico di tipo heatmap delle posizioni trovate sul manico dei rivolti
+    def plot_voicings_heatmap(self, n_strings, n_frets, voicings, set_or_subset, chordnoteslist=[]):   # crea un grafico di tipo heatmap delle posizioni dei rivolti
 
         """
         Visualizes a heatmap of voicing positions on the fretboard.
